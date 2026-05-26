@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Customer Satisfaction Survey — First Westroads Bank</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: Arial, sans-serif; background: #F0F4F8; min-height: 100vh; padding: 32px 16px; }
+  .wrap { max-width: 620px; margin: 0 auto; background: #fff; border: 1px solid #d0dae6; border-radius: 4px; overflow: hidden; }
+  .header { background: #1B3A6B; padding: 28px 36px 22px; }
+  .header-top { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 1px solid #2E5FA3; padding-bottom: 14px; margin-bottom: 14px; }
+  .bank-name { color: #fff; font-size: 19px; font-weight: 700; letter-spacing: 0.5px; }
+  .bank-sub { color: #B5D4F4; font-size: 12px; margin-top: 3px; }
+  .survey-label { color: #85B7EB; font-size: 12px; font-style: italic; text-align: right; padding-top: 2px; }
+  .header-body { color: #D5E8F0; font-size: 13px; line-height: 1.6; }
+  .progress-bar { height: 5px; background: #D5E8F0; }
+  .progress-fill { height: 100%; background: #2E5FA3; width: 0%; transition: width 0.35s ease; }
+  .letter { padding: 30px 36px; border-bottom: 1px solid #E8EEF5; }
+  .salutation { font-size: 15px; font-weight: 700; color: #1B3A6B; margin-bottom: 14px; }
+  .letter p { font-size: 14px; color: #3a3a3a; line-height: 1.75; margin-bottom: 12px; }
+  .letter ul { padding-left: 22px; margin-bottom: 14px; }
+  .letter ul li { font-size: 14px; color: #3a3a3a; line-height: 1.9; }
+  .letter ul li::marker { color: #1B3A6B; }
+  .sig { font-size: 14px; color: #555; margin-top: 4px; }
+  .sig-name { font-weight: 700; color: #1B3A6B; font-size: 15px; margin-top: 10px; }
+  .sig-title { font-size: 12px; color: #888; margin-top: 2px; }
+  .survey { padding: 28px 36px 8px; }
+  .section-label { font-size: 11px; font-weight: 700; color: #2E5FA3; letter-spacing: 1.2px; text-transform: uppercase; margin-bottom: 18px; padding-bottom: 7px; border-bottom: 2px solid #D5E8F0; }
+  .question-block { margin-bottom: 26px; }
+  .question-text { font-size: 14px; font-weight: 600; color: #1B3A6B; margin-bottom: 14px; line-height: 1.55; }
+  .sat-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 7px; }
+  .sat-option { display: flex; flex-direction: column; align-items: center; cursor: pointer; }
+  .sat-option input[type=radio] { display: none; }
+  .sat-btn { width: 100%; padding: 11px 4px; border: 1.5px solid #B5D4F4; border-radius: 8px; text-align: center; font-size: 11.5px; color: #185FA5; background: #F0F6FD; cursor: pointer; line-height: 1.35; transition: background 0.15s, border-color 0.15s, color 0.15s; font-family: Arial, sans-serif; }
+  .sat-option input[type=radio]:checked + .sat-btn { background: #1B3A6B; border-color: #1B3A6B; color: #fff; font-weight: 700; }
+  .sat-option:hover .sat-btn { border-color: #2E5FA3; background: #D5E8F0; }
+  .yn-row { display: flex; gap: 12px; }
+  .yn-option { cursor: pointer; }
+  .yn-option input[type=radio] { display: none; }
+  .yn-btn { display: block; padding: 10px 34px; border: 1.5px solid #B5D4F4; border-radius: 8px; font-size: 14px; color: #185FA5; background: #F0F6FD; cursor: pointer; transition: background 0.15s, border-color 0.15s, color 0.15s; font-weight: 600; font-family: Arial, sans-serif; }
+  .yn-option input[type=radio]:checked + .yn-btn { background: #1B3A6B; border-color: #1B3A6B; color: #fff; }
+  .yn-option:hover .yn-btn { border-color: #2E5FA3; background: #D5E8F0; }
+  .explain-box { margin-top: 14px; }
+  .explain-box.hidden { display: none; }
+  .explain-box label { font-size: 12px; color: #888; margin-bottom: 6px; display: block; }
+  textarea { width: 100%; border: 1px solid #c8d5e3; border-radius: 8px; padding: 11px 14px; font-size: 13.5px; color: #333; resize: vertical; min-height: 76px; font-family: Arial, sans-serif; line-height: 1.55; }
+  textarea:focus { outline: none; border-color: #2E5FA3; box-shadow: 0 0 0 3px rgba(46,95,163,0.1); }
+  hr.divider { border: none; border-top: 1px solid #EEF3F8; margin: 4px 0 22px; }
+  .submit-wrap { padding: 10px 36px 32px; }
+  .submit-btn { width: 100%; padding: 15px; background: #1B3A6B; color: #fff; border: none; border-radius: 8px; font-size: 15px; font-weight: 700; cursor: pointer; letter-spacing: 0.3px; font-family: Arial, sans-serif; transition: background 0.15s; }
+  .submit-btn:hover:not(:disabled) { background: #2E5FA3; }
+  .submit-btn:disabled { background: #8a9db5; cursor: not-allowed; }
+  .error-msg { color: #A32D2D; font-size: 13px; margin-top: 10px; text-align: center; display: none; }
+  .success { display: none; padding: 48px 36px; text-align: center; }
+  .success-icon { width: 64px; height: 64px; background: #EAF3DE; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; }
+  .success-icon svg { width: 32px; height: 32px; stroke: #3B6D11; fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+  .success h3 { color: #1B3A6B; font-size: 20px; margin-bottom: 10px; }
+  .success p { font-size: 14px; color: #555; line-height: 1.75; }
+  .footer { background: #F5F8FD; padding: 15px 36px; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #D5E8F0; }
+  .footer-left { font-size: 11px; color: #999; }
+  .footer-right { font-size: 11px; color: #999; font-style: italic; }
+  @media (max-width: 480px) {
+    body { padding: 0; }
+    .wrap { border-radius: 0; border-left: none; border-right: none; }
+    .header, .letter, .survey, .submit-wrap, .footer { padding-left: 20px; padding-right: 20px; }
+    .sat-btn { font-size: 10px; padding: 9px 2px; }
+    .yn-btn { padding: 10px 22px; }
+    .footer { flex-direction: column; gap: 4px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="header">
+    <div class="header-top">
+      <div>
+        <div class="bank-name">FIRST WESTROADS BANK</div>
+        <div class="bank-sub">Omaha, Nebraska</div>
+      </div>
+      <div class="survey-label">Customer Satisfaction Survey</div>
+    </div>
+    <div class="header-body">We value your experience and would love your feedback. This survey takes less than 2 minutes.</div>
+  </div>
+
+  <div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+  <div class="letter" id="letterSection">
+    <div class="salutation">Dear Valued Customer,</div>
+    <p>At First Westroads Bank, our greatest priority is the experience we provide to each and every one of our customers. We are dedicated to delivering the kind of personal, attentive service you deserve — and the best way to do that is by listening to you.</p>
+    <p>We would be grateful if you could take a few moments to complete the brief survey below. Your honest feedback helps us understand what we are doing well and where we can improve.</p>
+    <p>The survey covers three simple areas:</p>
+    <ul>
+      <li>Your overall satisfaction with your recent transaction</li>
+      <li>Whether you would recommend First Westroads Bank to others</li>
+      <li>Any suggestions you have to help us serve you better</li>
+    </ul>
+    <p style="margin-bottom: 18px;">Thank you sincerely for your continued trust and business. We are honored to serve you.</p>
+    <div class="sig">Warm regards,</div>
+    <div class="sig-name">The First Westroads Bank Team</div>
+    <div class="sig-title">Customer Experience Department</div>
+  </div>
+
+  <div class="survey" id="surveyForm">
+    <div class="section-label">Section 1 — Transaction experience</div>
+
+    <div class="question-block">
+      <div class="question-text">How satisfied were you with your recent transaction?</div>
+      <div class="sat-grid">
+        <label class="sat-option"><input type="radio" name="satisfaction" value="Extremely satisfied" onchange="updateProgress()"><div class="sat-btn">Extremely<br>satisfied</div></label>
+        <label class="sat-option"><input type="radio" name="satisfaction" value="Satisfied" onchange="updateProgress()"><div class="sat-btn">Satisfied</div></label>
+        <label class="sat-option"><input type="radio" name="satisfaction" value="Neutral" onchange="updateProgress()"><div class="sat-btn">Neutral</div></label>
+        <label class="sat-option"><input type="radio" name="satisfaction" value="Dissatisfied" onchange="updateProgress()"><div class="sat-btn">Dissatisfied</div></label>
+        <label class="sat-option"><input type="radio" name="satisfaction" value="Extremely dissatisfied" onchange="updateProgress()"><div class="sat-btn">Extremely<br>dissatisfied</div></label>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <div class="question-block">
+      <div class="question-text">Did this transaction meet your expectations?</div>
+      <div class="yn-row">
+        <label class="yn-option"><input type="radio" name="met_expectations" value="Yes" onchange="toggleExplain('expect_explain', false); updateProgress();"><div class="yn-btn">Yes</div></label>
+        <label class="yn-option"><input type="radio" name="met_expectations" value="No" onchange="toggleExplain('expect_explain', true); updateProgress();"><div class="yn-btn">No</div></label>
+      </div>
+      <div class="explain-box hidden" id="expect_explain">
+        <label>Please tell us more:</label>
+        <textarea name="expectations_explanation" placeholder="What fell short of your expectations?"></textarea>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <div class="question-block">
+      <div class="question-text">Would you recommend First Westroads Bank to a friend or family member?</div>
+      <div class="yn-row">
+        <label class="yn-option"><input type="radio" name="recommend" value="Yes" onchange="toggleExplain('recommend_explain', false); updateProgress();"><div class="yn-btn">Yes</div></label>
+        <label class="yn-option"><input type="radio" name="recommend" value="No" onchange="toggleExplain('recommend_explain', true); updateProgress();"><div class="yn-btn">No</div></label>
+      </div>
+      <div class="explain-box hidden" id="recommend_explain">
+        <label>Please tell us more:</label>
+        <textarea name="recommend_explanation" placeholder="What would make you more likely to recommend us?"></textarea>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <div class="section-label">Section 2 — Open feedback</div>
+    <div class="question-block">
+      <div class="question-text">Is there anything we could have done to make your experience even better?</div>
+      <textarea name="open_feedback" placeholder="Share any suggestions, compliments, or concerns..." style="min-height: 96px;" oninput="updateProgress()"></textarea>
+    </div>
+  </div>
+
+  <div class="submit-wrap" id="submitWrap">
+    <button class="submit-btn" id="submitBtn" onclick="submitSurvey()">Submit my feedback</button>
+    <div class="error-msg" id="errorMsg">Please answer all three questions before submitting.</div>
+  </div>
+
+  <div class="success" id="successMsg">
+    <div class="success-icon">
+      <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+    </div>
+    <h3>Thank you for your feedback!</h3>
+    <p>Your response has been received. We truly appreciate you taking the time to share your experience with us — it helps us serve you better.<br><br>If you have any questions or need assistance, please don't hesitate to reach out to your nearest First Westroads Bank branch.</p>
+  </div>
+
+  <div class="footer">
+    <div class="footer-left">First Westroads Bank &nbsp;|&nbsp; firstwestroadsbank.com</div>
+    <div class="footer-right">Confidential — for internal use only</div>
+  </div>
+</div>
+
+<script>
+  const FORMSPREE_URL = "https://formspree.io/f/mqejgqgp";
+
+  function toggleExplain(id, show) {
+    document.getElementById(id).classList.toggle('hidden', !show);
+  }
+
+  function updateProgress() {
+    const sat = document.querySelector('input[name="satisfaction"]:checked');
+    const exp = document.querySelector('input[name="met_expectations"]:checked');
+    const rec = document.querySelector('input[name="recommend"]:checked');
+    const open = document.querySelector('textarea[name="open_feedback"]').value.trim();
+    let filled = [sat, exp, rec].filter(Boolean).length;
+    if (open) filled++;
+    document.getElementById('progress').style.width = Math.round((filled / 4) * 100) + '%';
+  }
+
+  async function submitSurvey() {
+    const sat = document.querySelector('input[name="satisfaction"]:checked');
+    const exp = document.querySelector('input[name="met_expectations"]:checked');
+    const rec = document.querySelector('input[name="recommend"]:checked');
+    const errEl = document.getElementById('errorMsg');
+
+    if (!sat || !exp || !rec) {
+      errEl.textContent = 'Please answer all three questions before submitting.';
+      errEl.style.display = 'block';
+      return;
+    }
+    errEl.style.display = 'none';
+
+    const btn = document.getElementById('submitBtn');
+    btn.disabled = true;
+    btn.textContent = 'Submitting…';
+
+    const formData = {
+      satisfaction: sat.value,
+      met_expectations: exp.value,
+      expectations_explanation: document.querySelector('textarea[name="expectations_explanation"]').value.trim(),
+      recommend: rec.value,
+      recommend_explanation: document.querySelector('textarea[name="recommend_explanation"]').value.trim(),
+      open_feedback: document.querySelector('textarea[name="open_feedback"]').value.trim(),
+      submitted_at: new Date().toLocaleString('en-US', { timeZone: 'America/Chicago' })
+    };
+
+    try {
+      const response = await fetch(FORMSPREE_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Accept": "application/json" },
+        body: JSON.stringify(formData)
+      });
+
+      if (response.ok) {
+        document.getElementById('letterSection').style.display = 'none';
+        document.getElementById('surveyForm').style.display = 'none';
+        document.getElementById('submitWrap').style.display = 'none';
+        document.getElementById('successMsg').style.display = 'block';
+        document.getElementById('progress').style.width = '100%';
+      } else {
+        throw new Error('Submission failed');
+      }
+    } catch(e) {
+      btn.disabled = false;
+      btn.textContent = 'Submit my feedback';
+      errEl.textContent = 'Something went wrong. Please try again.';
+      errEl.style.display = 'block';
+    }
+  }
+</script>
+</body>
+</html>
