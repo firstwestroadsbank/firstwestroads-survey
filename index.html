@@ -87,18 +87,12 @@
 
   <div class="letter" id="letterSection">
     <div class="salutation">Dear Valued Customer,</div>
-    <p>At First Westroads Bank, our greatest priority is the experience we provide to each and every one of our customers. We are dedicated to delivering the kind of personal, attentive service you deserve, and the best way to do that is by listening to you.</p>
+    <p>At First Westroads Bank, our greatest priority is the experience we provide to each and every one of our customers. We are dedicated to delivering the kind of personal, attentive service you deserve — and the best way to do that is by listening to you.</p>
     <p>We would be grateful if you could take a few moments to complete the brief survey below. Your honest feedback helps us understand what we are doing well and where we can improve.</p>
-    <p>The survey covers three simple areas:</p>
-    <ul>
-      <li>Your overall satisfaction with your recent transaction</li>
-      <li>Whether you would recommend First Westroads Bank to others</li>
-      <li>Any suggestions you have to help us serve you better</li>
-    </ul>
-    <p style="margin-bottom: 18px;">Thank you for your continued trust and business. We are honored to serve you.</p>
-    <div class="sig">Sincerely,</div>
-    <div class="sig-name">Mark E. Ellerbeck</div>
-    <div class="sig-title">CEO</div>
+    <p style="margin-bottom: 18px;">Thank you sincerely for your continued trust and business. We are honored to serve you.</p>
+    <div class="sig">Warm regards,</div>
+    <div class="sig-name">The First Westroads Bank Team</div>
+    <div class="sig-title">Customer Experience Department</div>
   </div>
 
   <div class="survey" id="surveyForm">
@@ -113,33 +107,26 @@
         <label class="sat-option"><input type="radio" name="satisfaction" value="Dissatisfied" onchange="updateProgress()"><div class="sat-btn">Dissatisfied</div></label>
         <label class="sat-option"><input type="radio" name="satisfaction" value="Extremely dissatisfied" onchange="updateProgress()"><div class="sat-btn">Extremely<br>dissatisfied</div></label>
       </div>
-    </div>
-
-    <hr class="divider">
-
-    <div class="question-block">
-      <div class="question-text">Did this transaction meet your expectations?</div>
-      <div class="yn-row">
-        <label class="yn-option"><input type="radio" name="met_expectations" value="Yes" onchange="toggleExplain('expect_explain', false); updateProgress();"><div class="yn-btn">Yes</div></label>
-        <label class="yn-option"><input type="radio" name="met_expectations" value="No" onchange="toggleExplain('expect_explain', true); updateProgress();"><div class="yn-btn">No</div></label>
-      </div>
-      <div class="explain-box hidden" id="expect_explain">
-        <label>Please tell us more:</label>
-        <textarea name="expectations_explanation" placeholder="What fell short of your expectations?"></textarea>
+      <div style="margin-top:14px;">
+        <label style="font-size:12px;color:#888;margin-bottom:6px;display:block;">Comments (optional):</label>
+        <textarea name="satisfaction_comments" placeholder="Any additional comments about your transaction experience..."></textarea>
       </div>
     </div>
 
     <hr class="divider">
 
     <div class="question-block">
-      <div class="question-text">Would you recommend First Westroads Bank to a friend or family member?</div>
-      <div class="yn-row">
-        <label class="yn-option"><input type="radio" name="recommend" value="Yes" onchange="toggleExplain('recommend_explain', false); updateProgress();"><div class="yn-btn">Yes</div></label>
-        <label class="yn-option"><input type="radio" name="recommend" value="No" onchange="toggleExplain('recommend_explain', true); updateProgress();"><div class="yn-btn">No</div></label>
+      <div class="question-text">How likely are you to recommend First Westroads Bank to a friend or family member?</div>
+      <div class="sat-grid">
+        <label class="sat-option"><input type="radio" name="recommend" value="Extremely likely" onchange="updateProgress()"><div class="sat-btn">Extremely<br>likely</div></label>
+        <label class="sat-option"><input type="radio" name="recommend" value="Likely" onchange="updateProgress()"><div class="sat-btn">Likely</div></label>
+        <label class="sat-option"><input type="radio" name="recommend" value="Neutral" onchange="updateProgress()"><div class="sat-btn">Neutral</div></label>
+        <label class="sat-option"><input type="radio" name="recommend" value="Unlikely" onchange="updateProgress()"><div class="sat-btn">Unlikely</div></label>
+        <label class="sat-option"><input type="radio" name="recommend" value="Extremely unlikely" onchange="updateProgress()"><div class="sat-btn">Extremely<br>unlikely</div></label>
       </div>
-      <div class="explain-box hidden" id="recommend_explain">
-        <label>Please tell us more:</label>
-        <textarea name="recommend_explanation" placeholder="What would make you more likely to recommend us?"></textarea>
+      <div style="margin-top:14px;">
+        <label style="font-size:12px;color:#888;margin-bottom:6px;display:block;">Comments (optional):</label>
+        <textarea name="recommend_comments" placeholder="What influenced your answer?"></textarea>
       </div>
     </div>
 
