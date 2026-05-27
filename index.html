@@ -159,71 +159,34 @@
 </div>
 
 <script>
-  const FORMSPREE_URL = "https://formspree.io/f/mqejgqgp";
-
   function toggleExplain(id, show) {
     document.getElementById(id).classList.toggle('hidden', !show);
   }
 
   function updateProgress() {
     const sat = document.querySelector('input[name="satisfaction"]:checked');
-    const exp = document.querySelector('input[name="met_expectations"]:checked');
     const rec = document.querySelector('input[name="recommend"]:checked');
-    const open = document.querySelector('textarea[name="open_feedback"]').value.trim();
-    let filled = [sat, exp, rec].filter(Boolean).length;
-    if (open) filled++;
-    document.getElementById('progress').style.width = Math.round((filled / 4) * 100) + '%';
+    let filled = [sat, rec].filter(Boolean).length;
+    document.getElementById('progress').style.width = Math.round((filled / 2) * 100) + '%';
   }
 
-  async function submitSurvey() {
+  function submitSurvey() {
     const sat = document.querySelector('input[name="satisfaction"]:checked');
-    const exp = document.querySelector('input[name="met_expectations"]:checked');
     const rec = document.querySelector('input[name="recommend"]:checked');
     const errEl = document.getElementById('errorMsg');
 
-    if (!sat || !exp || !rec) {
-      errEl.textContent = 'Please answer all three questions before submitting.';
+    if (!sat || !rec) {
+      errEl.textContent = 'Please answer both questions before submitting.';
       errEl.style.display = 'block';
       return;
     }
     errEl.style.display = 'none';
 
-    const btn = document.getElementById('submitBtn');
-    btn.disabled = true;
-    btn.textContent = 'Submitting…';
-
-    const formData = {
-      satisfaction: sat.value,
-      met_expectations: exp.value,
-      expectations_explanation: document.querySelector('textarea[name="expectations_explanation"]').value.trim(),
-      recommend: rec.value,
-      recommend_explanation: document.querySelector('textarea[name="recommend_explanation"]').value.trim(),
-      open_feedback: document.querySelector('textarea[name="open_feedback"]').value.trim(),
-      submitted_at: new Date().toLocaleString('en-US', { timeZone: 'America/Chicago' })
-    };
-
-    try {
-      const response = await fetch(FORMSPREE_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json", "Accept": "application/json" },
-        body: JSON.stringify(formData)
-      });
-
-      if (response.ok) {
-        document.getElementById('letterSection').style.display = 'none';
-        document.getElementById('surveyForm').style.display = 'none';
-        document.getElementById('submitWrap').style.display = 'none';
-        document.getElementById('successMsg').style.display = 'block';
-        document.getElementById('progress').style.width = '100%';
-      } else {
-        throw new Error('Submission failed');
-      }
-    } catch(e) {
-      btn.disabled = false;
-      btn.textContent = 'Submit my feedback';
-      errEl.textContent = 'Something went wrong. Please try again.';
-      errEl.style.display = 'block';
-    }
+    document.getElementById('letterSection').style.display = 'none';
+    document.getElementById('surveyForm').style.display = 'none';
+    document.getElementById('submitWrap').style.display = 'none';
+    document.getElementById('successMsg').style.display = 'block';
+    document.getElementById('progress').style.width = '100%';
   }
 </script>
 </body>
